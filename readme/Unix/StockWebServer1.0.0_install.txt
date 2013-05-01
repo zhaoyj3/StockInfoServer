@@ -117,7 +117,7 @@ $ npm -v
 git clone git://github.com/zhaoyj/StockInfo/StockWebServer.git；
 2.	到StockWebServer目录下执行如下命令安装依赖的类库；
 node install
-3.	修改StockWebServer/bin目录下脚本执行权限
+3.	修改StockWebServer目录下脚本执行权限
 chmod a+x stockinfo_cluster.sh
 chmod a+x stockinfo_single.sh
 4.	到此安装完成；启动系统，具体启动方法见4.1节。
@@ -187,7 +187,7 @@ var netCLientConfig = {port: 9999,ip: '127.0.0.1'};
 4.1 运行及终止程序
 4.1.1 运行
 方式一：多线程模式：
-到StockWebServer/bin目录下，命令行运行shell脚本文件stockinfo_cluster.sh。
+到StockWebServer目录下，命令行运行shell脚本文件stockinfo_cluster.sh。
 $./stockinfo_cluster.sh start
 没有报错，出现类似下面代码，表示启动成功。
 Starting StockInfo: 
@@ -199,7 +199,7 @@ Starting StockInfo finish.
       
 4.1.2 终止
 方式一：多线程模式：
-到StockWebServer/bin目录下，命令行运行shell脚本文件stockinfo_cluster.sh。
+到StockWebServer目录下，命令行运行shell脚本文件stockinfo_cluster.sh。
 $./stockinfo_cluster.sh stop
 没有报错，出现类似下面代码，表示启动成功。
 Starting StockInfo: 
