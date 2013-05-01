@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<project name="StockInfoServer" default="build-tar" basedir=".">
+
+    <property name="buildDir" value="${basedir}/build" />
+    <property name="buildClassesDir" value="${buildDir}/classes" />
+    <property name="buildOutputDir" value="${buildDir}/output" />
+    <property name="tarDir" value="${buildDir}/output" />
+    <property name="tarNmDir" value="${buildOutputDir}/StockInfoServer" />
+    <property name="tarBinDir" value="${buildOutputDir}/StockInfoServer/bin" />
+    <property name="tarLibDir" value="${buildOutputDir}/StockInfoServer/lib" />
+    <property name="tarConfDir" value="${buildOutputDir}/StockInfoServer/config" />
+
+    <property name="distDir" value="${basedir}/dist" />
+    <property name="distJarName" value="StockInfoServer.jar" />
+    <property name="distTarName" value="StockInfoServer.tar" />
+    <property name="3rdlibDir" value="./lib" />
+
+    <path id="compile.classpath">
+        <fileset id="3rdlibs" dir="${3rdlibDir}">
+            <include name="aidmlib-monitor-1.0.0.jar" />
+            <include name="aidmlib-web-1.0.0.jar" />
+            <include name="jmxtools.jar" />
+            <include name="commons-beanutils.jar" />
+            <include name="commons-collections-3.1.jar" />
+            <include name="commons-lang-2.4.jar" />
+            <include name="commons-logging-1.1.1.jar" />
+            <include name="log4j-1.2.15.jar" />
+            <include name="ezmorph-1.0.6.jar" />
+            <include name="json-lib-2.4-jdk15.jar" />
+            <include name="dom4j-1.6.1.jar" />
+            <include name="xstream-1.3.1.jar" />
+        </fileset>
+    </path>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${buildDir}" />
+        <mkdir dir="${buildClassesDir}" />
+        <mkdir dir="${buildOutputDir}" />
+        <mkdir dir="${tarNmDir}" />
+        <mkdir dir="${tarNmDir}" />
+        <mkdir dir="${tarBinDir}" />
+        <mkdir dir="${tarLibDir}" />
+        <mkdir dir="${tarConfDir}" />
+        <mkdir dir="${distDir}" />
+        <antcall target="userInput" />
+    </target>
+
+    <target name="userInput">
+        <input message="Does it need to create a version file? (y/n)" validargs="y,n" addproperty="input.ifInputVersion" />
+        <condition property="input.test.ifInputVersion">
+            <equals arg1="${input.ifInputVersion}" arg2="y" />
+        </condition>
+        <antcall target="createVersion" />
+        <antcall target="cleanVersion" />
+    </target>
+
+    <target name="createVersion" if="input.test.ifInputVersion">
+        <input message="Please input version:" addproperty="input.version" />
+        <echo file="${tarNmDir}/version.txt" message="${input.version}" />
+    </target>
+
+    <target name="cleanVersion" unless="input.test.ifInputVersion">
+        <echo file="${buildClassesDir}/version.txt" message="No version input!!! Please contract package manager." />
+        <echo message="---------No version file create for this package---------" />
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="src" 
+               destdir="${buildClassesDir}"
+               classpathref="compile.classpath"
+               optimize="on"
+               debug="on"
+               encoding="UTF-8"
+               debuglevel="lines,vars,source" 
+               fork="true"
+               memoryMaximumSize="512m"
+           includeantruntime="true" />
+    </target>
+
+    <target name="build-jar" depends="compile">
+        <jar jarfile="${distDir}/${distJarName}" compress="true" >
+            <fileset dir="${buildClassesDir}">
+                <include name="**/*.class" />
+            </fileset>
+        <manifest> 
+        <attribute name="Main-class" value="com.guangfa.stockinfoserver.AppServer"/>
+        </manifest> 
+        </jar>
+    </target>
+
+    <target name="build-tar" depends="build-jar">
+        <copy todir="${tarBinDir}">
+        <fileset dir="${distDir}">
+        <include name="${distJarName}" />
+        </fileset>
+        <fileset dir="${basedir}/bin" >
+                <include name="*.sh" />
+                <include name="*.bat" />
+            </fileset>
+        </copy>
+        <copy todir="${tarLibDir}" flatten="true">
+            <fileset refid="3rdlibs"/>
+        </copy>
+        <copy todir="${tarConfDir}">
+            <fileset dir="${basedir}/config">
+                <include name="*.properties" />
+                <include name="*.xml" />
+                <include name="**/*.sql" />
+                <include name="**/*.vm" />
+            </fileset>  
+        </copy>
+        <tar destfile="${distDir}/${distTarName}" >
+            <fileset dir="${buildOutputDir}" />
+        </tar>
+    </target>
+
+    <target name="clean">
+        <delete dir="${buildDir}" />
+        <delete dir="${distDir}" />
+    </target>
+
+</project>
