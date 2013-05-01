@@ -1,2 +1,0 @@
-1、安装StockWebServer服务器
-2、安装StockInfoServer服务器
