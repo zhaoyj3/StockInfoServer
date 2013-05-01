@@ -1,0 +1,255 @@
+﻿
+股票展示服务器V1.0.0
+
+安装手册
+
+
+
+
+
+
+
+
+
+编 写	招永江	编写 时间	2013-5-1
+审 批		审批 时间	
+文档版本	
+
+
+ 
+摘要
+日期	修订号	描述	著者	日期
+2013-5-1	V1.0.0	创建文档	招永江	2013-5-1
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+
+ 
+目  录
+第1章 系统简介	3
+1.1 系统功能和用途	3
+1.2 阅读指南	3
+第2章 安装前的准备	4
+2.1 运行环境与要求	4
+第3章 软件安装	5
+3.1 软件安装步骤	5
+3.1.1 安装前的工作	5
+3.1.2 安装步骤	5
+3.2 安装完成后产生的文件清单	6
+3.3 配置文件的修改	7
+3.4 需要定时运行或马上运行的程序	8
+第4章 系统维护	9
+4.1 运行及终止程序	9
+4.1.1 运行	9
+4.1.2 终止	9
+第5章 附录	10
+5.1 附录A：快速安装指南	10
+5.2 附录B：安装nodejs常遇问题指南	10
+
+
+
+第1章 系统简介
+1.1 系统功能和用途
+StockWebServer是股票行情展示的web服务器，实时展示行情数据。
+1.2 阅读指南
+	如果读者没有操作系统的使用经验（操作系统指本软件运行机器上的操作系统），请先阅读操作系统的相关知识；
+	如果读者没有安装和使用软件包管理器的经验，请先阅读相关知识，例如：yum、apt-get等；
+	如果读者从全新的环境安装StockWebServer，请从第3章开始阅读；
+
+
+
+第2章 安装前的准备
+从本章节开始介绍StockWebServer的安装方法。在本章中将介绍系统安装前的准备工作，如：运行环境等，如果你按照以下说明完成工作，将对系统顺利安装成功创造良好的条件。
+2.1 运行环境与要求
+	操作系统：StockWebServer使用Nodejs 语言编写，可以在绝大部分支持nodejs的操作系统上正常运行；
+	确认操作系统安装了中文字库包，支持日志中文展示。
+	内存要求：至少2GB内存；
+	确认操作系统是否已安装yum或者apt-get，其中一种包安装命令即可；
+通过在命令行输入yum判断yum命令是否已安装,出现yum: command not found；说明安装不成功；判断apt-get的同理,请安装了再执行下面步骤。
+	确认操作系统是否已安装Python2.7或更高版本；
+通过在命令行输入python判断python是否已安装,安装步骤这里不详细,；
+[root@uazhaoyj ~]# python
+Python 2.7.4 (default, Apr 30 2013, 06:18:54) 
+[GCC 4.1.2 20070626 (Red Hat 4.1.2-14)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+	2. 安装其他依赖包: 
+sudo apt-get install g++ curl libssl-dev apache2-utils
+	3） 安装git工具： 
+sudo apt-get install git-core
+
+
+
+
+第3章 软件安装
+3.1 软件安装步骤
+3.1.1 安装前的工作
+	请确保yum或apt-get、git等命令可用。
+	参考git clone git://github.com/joyent/node.git路径，下载最新版node-v0.10.5.tar.gz源码版本。
+按如下命令安装nodejs:
+./configure --prefix=/usr/local/ nodejs-v0.10.5
+make
+make install
+        安装过程出现错误，安装失败，请参考5.2附录。
+ 安装成功后，建立nodejs软连接:
+ln -s /usr/local/nodejs-v0.10.5/bin/node /bin/
+ln -s /usr/local/nodejs-v0.10.5/bin/npm  /bin/
+验证安装成功：
+$ node -v
+v0.10.5
+出现版本号表示node安装成功了。
+$ npm -v
+1.2.18
+出现版本号表示npm安装成功了。
+
+3.1.2 安装步骤
+1.	获取应用StockWebServer
+git clone git://github.com/zhaoyj/StockInfo/StockWebServer.git；
+2.	到StockWebServer目录下执行如下命令安装依赖的类库；
+node install
+3.	修改StockWebServer/bin目录下脚本执行权限
+chmod a+x stockinfo_cluster.sh
+chmod a+x stockinfo_single.sh
+4.	到此安装完成；启动系统，具体启动方法见4.1节。
+3.2 安装完成后产生的文件清单
+安装成功后目录如下：
+目录	用途	权限	文件	其他
+lib/stockService	工程类库	可读	文件名称	权限	功能	
+			index.js			
+			channel.js			
+			httpServer.js			
+			netClient.js			
+node_modules	依赖包	可读	文件名称	权限	功能	
+			ejs包			
+			express包			
+			socket.io			
+views	页面模版文件	可读	文件名称	权限	功能	
+			stock.ejs			
+routes	页面路径路由	可读	文件名称	权限	功能	
+bin	操作脚本	可执行	文件名称	权限	功能	
+			stockinfo_single.sh			
+			stockinfo_cluster.sh			
+public	资源路径	可读	文件名称	权限	功能	
+			images路径			
+			javascripts路径			
+			stylesheets路径			
+app.js	单线程启动文件					
+package.json	下载依赖包					
+cluster.js	多线程启动文件					
+请检查文件夹是否包含以上列出的所有文件，如有缺失，请联系开发者，获取正确的安装包。
+3.3 配置文件的修改
+系统默认http服务器的监听端口为8888，连接StockInfoServer服务器的端口为9999，IP地址为127.0.0.1；
+1）
+若8888端口存在冲突，修改8888端口涉及修改的部分如下：
+1、修改http服务器监听端口
+ 若采用多线程模式启动，则在cluster.js修改如下部分：
+        var app = require('./app');
+         app.startApp(8888,{port: 9999,ip: '127.0.0.1'})
+     若采用单线程模式启动，则在app.js修改如下部分：
+//端口属性配置
+var port=8888;
+var netCLientConfig = {port: 9999,ip: '127.0.0.1'};
+
+  
+2） 
+    若StockInfoServer服务器的监听端口9999端口存在冲突，修改stockInfoServer.xml中的listenPort端口配置，涉及本模块修改的部分如下：
+1、修改http服务器监听端口
+ 若采用多线程模式启动，则在cluster.js修改如下部分：
+        var app = require('./app');
+         app.startApp(8888,{port: 9999,ip: '127.0.0.1'})
+     若采用单线程模式启动，则在app.js修改如下部分：
+//端口属性配置
+var port=8888;
+var netCLientConfig = {port: 9999,ip: '127.0.0.1'};
+
+     若StockInfoServer服务器的地址改变，同理。
+
+3.4 需要定时运行或马上运行的程序
+无。
+
+
+
+
+第4章 系统维护
+4.1 运行及终止程序
+4.1.1 运行
+方式一：多线程模式：
+到StockWebServer/bin目录下，命令行运行shell脚本文件stockinfo_cluster.sh。
+$./stockinfo_cluster.sh start
+没有报错，出现类似下面代码，表示启动成功。
+Starting StockInfo: 
+7924
+Starting StockInfo finish.
+
+     方式二：执行单线程模式
+采用stockinfo_single.sh脚本，执行方法跟上面雷同。
+      
+4.1.2 终止
+方式一：多线程模式：
+到StockWebServer/bin目录下，命令行运行shell脚本文件stockinfo_cluster.sh。
+$./stockinfo_cluster.sh stop
+没有报错，出现类似下面代码，表示启动成功。
+Starting StockInfo: 
+7924
+Starting StockInfo finish.
+
+     方式二：执行单线程模式
+采用stockinfo_single.sh脚本，执行方法跟上面雷同。
+
+
+
+
+第5章 附录
+5.1 附录A：快速安装指南
+安装步骤请参照3.1小节。
+
+5.2 附录B：安装nodejs常遇问题指南
+安装编译nodejs源代码时常遇问题：
+问题一：
+./configure --prefix=/usr/local/nodejs-v0.10.5
+  File "./configure", line 331
+    o['default_configuration'] = 'Debug' if options.debug else 'Release'
+                                          ^
+SyntaxError: invalid syntax
+这个是你的python版本不够或者没有安装
+python -v 这里查看自己系统当前版本
+Python 2.4.3
+解决办法：
+建议采用Python2.7，python 升级，请看这篇文章http://hxl2009.blog.51cto.com/779549/1031310
+问题二：
+./configure --prefix=/usr/local/ nodejs-v0.10.5
+make
+  File "../../tools/js2c.py", line 36, in <module>
+    import bz2
+ImportError: No module named bz2
+make[1]: *** [/home/packages/ nodejs-v0.10.5/out/Release/obj/gen/libraries.cc]  1
+解决步骤：
+ yum -y install bzip2*
+cd Python-2.7.3/Modules/zlib
+./configure ;make;make install
+cd Python-2.7.3/
+python setup.py install
+在编译安装:
+./configure --prefix=/usr/local/ nodejs-v0.10.5
+make
+make install
+ok了
+ln -s /usr/local/ nodejs-v0.10.5/bin/node/bin/
+ln -s /usr/local/ nodejs-v0.10.5/bin/npm/bin/
+
+验证:
+node -v
+npm -v
+出现版本号表示安装成功了。
+
+

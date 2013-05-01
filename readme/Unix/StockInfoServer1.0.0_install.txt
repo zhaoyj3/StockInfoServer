@@ -1,0 +1,382 @@
+﻿
+股票行情模拟生成器V1.0.0
+
+安装手册
+
+
+
+
+
+
+
+
+
+编 写	招永江	编写 时间	2011-7-20
+审 批		审批 时间	
+文档版本	
+
+
+ 
+摘要
+日期	修订号	描述	著者	日期
+2013-4-29	V1.0.0	创建文档	招永江	2013-4-29
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+
+ 
+目  录
+第1章 系统简介	3
+1.1 系统功能和用途	3
+1.2 阅读指南	3
+第2章 安装前的准备	4
+2.1 运行环境与要求	4
+2.2 安装文件	4
+第3章 软件安装	5
+3.1 软件安装步骤	5
+3.1.1 安装前的工作	5
+3.1.2 安装步骤	5
+3.2 安装完成后产生的文件清单	5
+3.3 配置文件的修改	7
+3.3.1 stockInfoServer.xml	7
+3.3.2 log4j.properties	9
+3.3.3 monitor-config.xml	10
+3.4 需要定时运行或马上运行的程序	10
+第4章 系统维护	11
+4.1 运行及终止程序	11
+4.1.1 运行	11
+4.1.2 终止	11
+4.2 更新程序	13
+4.3 常见日志说明	13
+第5章 附录	14
+5.1 附录B：快速安装指南	14
+
+
+
+
+
+第1章 系统简介
+1.1 系统功能和用途
+StockInfoServer是股票行情模拟器，实时模拟行情数据。
+1.2 阅读指南
+	如果读者没有操作系统的使用经验（操作系统指本软件运行机器上的操作系统），请先阅读操作系统的相关知识；
+	如果读者没有安装和使用Java Develop Kit（JDK）的经验，请先阅读JDK的相关知识；
+	如果读者没有使用Ant的经验，请先阅读Ant的相关知识；
+	如果读者从全新的环境安装StockInfoServer，请从第3章开始阅读；
+
+
+
+
+
+第2章 安装前的准备
+从本章节开始介绍StockInfoServer的安装方法。在本章中将介绍系统安装前的准备工作，如：运行环境等，如果你按照以下说明完成工作，将对系统顺利安装成功创造良好的条件。
+2.1 运行环境与要求
+	操作系统：StockInfoServer使用java 语言编写，可以在绝大部分支持java的操作系统上正常运行；
+	确认操作系统安装了中文字库包，支持日志中文展示。
+	内存要求：至少2GB内存；
+	确认操作系统是否已安装jdk1.6；
+1)	通过在命令行输入java –version判断jdk是否已安装，以及安装版本；
+java version "1.6.0_23"
+Java(TM) 2 Runtime Environment, Standard Edition (build jdk1.6.0_23-b05)
+Java HotSpot(TM) Client VM (build 19.0-b09, mixed mode, sharing)
+2)	如果安装的版本不是JDK1.6.*_*，请根据操作系统查找相应版本的JDK安装包以及帮助，重新安装；
+3)	如果未安装，请根据操作系统查找版本为JDK1.6的JDK安装包以及帮助，重新安装。
+	确认操作系统是否已安装ant；
+1)	通过在命令行输入ant –version判断ant是否已安装，以及安装版本,安装步骤这里不详细,；
+Apache Ant version 1.7.1 compiled on June 27 2008
+2)	安装了ant后，到源工程目录即 build.xml所在目录，执行以下命令：
+ant
+3)	看到BUILD SUCCESSFUL打包成功的文字描述后，到工程目录下的dist目录获得安装文件StockInfoServer.tar。
+     
+2.2 安装文件
+获得安装文件StockInfoServer.tar，里面包括程序和相应的配置文件及操作脚本三个文件夹。
+
+
+
+
+
+
+第3章 软件安装
+3.1 软件安装步骤
+3.1.1 安装前的工作
+保证jdk1.6和ant已经安装。
+3.1.2 安装步骤
+1.	安装应用StockInfoServer
+1)	将StockInfoServer.tar复制到安装目录下；
+2)	解压StockInfoServer.tar文件，指令如下：
+tar –xvf StockInfoServer.tar
+解压后，目录结构如3.2节所述。
+2.	修改StockInfoServer/config目录下的配置文件，具体修改方法见4.2节；
+3.	修改StockInfoServer/bin目录下脚本执行权限
+chmod a+x run.sh
+chmod a+x stop.sh
+4.	到此安装完成。启动系统，具体方法见5.1节。
+3.2 安装完成后产生的文件清单
+解压文件后目录如下：
+目录	用途	权限	文件	其他
+lib	依赖包	可读	文件名称	权限	功能	
+			aidmlib-monitor-1.0.0.jar			
+			commons-beanutils.jar			
+			commons-collections-3.1.jar			
+			ezmorph-1.0.6.jar			
+			commons-lang-2.4.jar			
+			commons-logging-1.1.1.jar			
+			dom4j-1.6.1.jar			
+			json-lib-2.4-jdk15.jar			
+			log4j-1.2.15.jar			
+			xstream-1.3.1.jar			
+config	配置文件、sql文件及模版文件	可读	文件名称	权限	功能	
+			netmanagement.xml			
+			log4j.properties			
+			monitor-config.xml			
+bin	操作脚本	可读，可执行	文件名称	权限	功能	
+			StockInfoServer.jar			
+			run.sh			
+			stop.sh			
+清单树状结构如下：
+└─lib					//StockInfoServer.jar依赖的包
+   │   aidmlib-monitor-1.0.0.jar					   
+   │   commons-beanutils.jar			  
+   │   commons-collections-3.1.jar				
+   │   commons-lang-2.4.jar		
+   │   commons-logging-1.1.1.jar		
+   │   ezmorph-1.0.6.jar				    
+   │   json-lib-2.4-jdk15.jar
+   │   dom4j-1.6.1.jar
+   │   log4j-1.2.15.jar				    
+   │   xstream-1.3.1.jar
+   ├─config						//配置文件目录
+   │     stockInfoServer.xml	    //程序配置文件
+│     log4j.properties                //日志配置文件
+│     monitor-config.xml             //监控配置文件  
+   ├─bin						
+   │   	StockInfoServer.jar 	    //股票模拟器
+  │    	run.sh                    //启动脚本
+   │    	stop.sh                  // 关闭脚本
+请检查解压后文件夹是否包含以上列出的所有文件，如有缺失，请联系开发者，获取正确的安装包。
+3.3 配置文件的修改
+配置文件清单在StockInfoServer的config目录下：
+文件名	描述
+stockInfoServer.xml	股票模拟器配置文件
+log4j.properties	系统日志输出配置信息。
+monitor-config.xml	监管程序配置文件
+3.3.1 stockInfoServer.xml
+3.3.1.1 全局配置项
+<global>
+       <threadPoolSize>5</threadPoolSize>
+	<listenPort>9999</listenPort>    
+</global>
+配置名称	意义
+< listenPort >	服务器监听端口
+< threadPoolSize >	线程池中最大线程数
+3.3.1.2 公司配置项
+  <companys>
+            <company>
+            <name>APPLE</name>
+            <code>000001</code>
+            <symbol>APPL</symbol>
+			<market>sz</market>
+			<desc>APPLE</desc>
+         </company>
+         <company>
+            <name>MOTO</name>
+            <code>000002</code>
+            <symbol>MOTO</symbol>
+			<market>sz</market>
+			<desc>MOTO</desc>
+         </company>
+         <company>
+            <name>HTC</name>
+            <code>000003</code>
+            <symbol>HTC</symbol>
+			<market>sz</market>
+			<desc>HTC</desc>
+        </company>
+		 <company>
+            <name>GOOGLE</name>
+            <code>000004</code>
+            <symbol>GOOG</symbol>
+			<market>sh</market>
+			<desc>GOOGLE</desc>
+        </company>
+		 <company>
+            <name>MICROSOFT</name>
+            <code>000005</code>
+            <symbol>MICO</symbol>
+			<market>sh</market>
+			<desc>MICROSOFT</desc>
+        </company>
+   
+    </companys>
+配置名称	意义
+< name >	公司名
+< code >	股票代码, 保证唯一值
+< symbol >	公司简称 
+< market >	市场
+< desc >	描述
+公司配置项,采用默认值无需修改。可以添加若干个公司节点< company >，当增加公司时，必须配置对应的任务项，同时在全局配置项增加线程池的个数，注意一定作对应的修改。
+
+3.3.1.3 任务配置项
+ <tasks>
+        <task>
+            <name>APPLE</name>
+            <desc>提供APPLE行情</desc>
+			<company>000001</company>
+            <period>1</period>
+            <timeUnit>SECONDS</timeUnit>
+        </task>
+		<task>
+            <name>MOTO</name>
+            <desc>提供MOTO行情</desc>
+            <company>000002</company>
+            <period>2</period>
+            <timeUnit>SECONDS</timeUnit>
+        </task>
+		<task>
+            <name>HTC</name>
+            <desc>提供HTC行情</desc>
+			<company>000003</company>
+            <period>3</period>
+            <timeUnit>SECONDS</timeUnit>
+        </task>
+		<task>
+            <name>GOOGLE</name>
+            <desc>提供GOOGLE行情</desc>
+			<company>000004</company>
+            <period>4</period>
+            <timeUnit>SECONDS</timeUnit>
+        </task>
+		<task>
+            <name>MICROSOFT</name>
+            <desc>提供MICROSOFT行情</desc>
+			<company>000005</company>
+            <period>5</period>
+            <timeUnit>SECONDS</timeUnit>
+        </task>
+    </tasks>
+配置名称	意义
+<name>	任务名称
+<desc>	任务描述
+< company >	对应公司code属性，绑定做哪个公司股票任务
+< period >	任务的循环周期时间
+< timeUnit >	任务的循环周期单位，分别为：SECONDS、MINUTES、HOURS
+任务配置项,采用默认值无需修改。可以添加若干个任务节点<task>，当增加任务时，必须同时在全局配置项增加线程池的个数，注意一定作对应的修改。
+3.3.2 log4j.properties
+log4j.rootLogger=debug, logfile
+log4j.appender.console=org.apache.log4j.ConsoleAppender
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=%d %p [%c] - %m %n
+
+log4j.appender.logfile=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.logfile.File=log/stockInfoServer.log
+log4j.appender.logfile.Append=true
+log4j.appender.logfile.DatePattern=yyyy-MM-dd
+log4j.appender.logfile.layout=org.apache.log4j.PatternLayout
+log4j.appender.logfile.layout.ConversionPattern=%d %p [%C{1}] - %m %n
+配置名称	意义
+log4j.rootLogger	系统上线初期建议采用默认值，系统稳定后可改为”info,logfile”
+log4j.appender.logfile.File	日志文件路径，必须按日志存放路径修改
+3.3.3 monitor-config.xml
+<?xml version="1.0"?>
+<config enable="true" >
+	    <!-- 
+	       默认只能通过Web浏览器(连接指定的HTTP端口)、或Console来进行管理。
+	         若采用JMX客户端工具，请参考使用手册
+	    -->
+    	<http port="1088" />
+</config>
+配置名称	意义
+port	建议采用默认值,1088，若启动过程中出现“com.asiainfo.dm.common.monitor.MonitorException: 监控管理框架:启动公共监控管理程序出错，该端口已被占用!”，请修改端口。
+3.4 需要定时运行或马上运行的程序
+把StockInfoServer.tar解压后，进入StockInfoServer/bin目录。在命令行运行shell脚本文件run.sh。
+$./run.sh
+然后打开日志文件，看系统是否成功启动
+$tail -f log/stockInfoServer.log
+当出现类似如下代码，系统启动成功：
+2013-04-30 05:13:55,416 DEBUG [AgentServer] - Manageable实例的类名为:com.guangfa.stockinfoserver.AppServer 
+2013-04-30 05:13:56,585 INFO [AppConfig] - Company APPLE [APPLE] created 
+2013-04-30 05:13:56,587 INFO [AppConfig] - Company MOTO [MOTO] created 
+2013-04-30 05:13:56,594 INFO [AppConfig] - Company HTC [HTC] created 
+2013-04-30 05:13:56,598 INFO [AppConfig] - Company GOOGLE [GOOGLE] created 
+2013-04-30 05:13:56,603 INFO [AppConfig] - Company MICROSOFT [MICROSOFT] created 
+2013-04-30 05:13:56,614 INFO [AppConfig] - Task APPLE [提供APPLE行情] created 
+2013-04-30 05:13:56,616 INFO [AppConfig] - Task MOTO [提供MOTO行情] created 
+2013-04-30 05:13:56,617 INFO [AppConfig] - Task HTC [提供HTC行情] created 
+2013-04-30 05:13:56,618 INFO [AppConfig] - Task GOOGLE [提供GOOGLE行情] created 
+2013-04-30 05:13:56,620 INFO [AppConfig] - Task MICROSOFT [提供MICROSOFT行情] created 
+2013-04-30 05:13:56,633 INFO [AppServer] - StockInfoServer is successfully startup 
+2013-04-30 05:13:56,705 INFO [AgentServer] - 公共监控管理系统以HTTP的方式启动，端口:1088
+
+
+
+
+
+
+第4章 系统维护
+4.1 运行及终止程序
+4.1.1 运行
+把StockInfoServer.tar解压后，进入StockInfoServer/bin目录。在命令行运行shell脚本文件run.sh。
+$./run.sh
+然后打开日志文件，看系统是否成功启动
+$tail -f log/stockInfoServer.log
+当出现类似如下代码，系统启动成功：
+2013-04-30 05:13:55,416 DEBUG [AgentServer] - Manageable实例的类名为:com.guangfa.stockinfoserver.AppServer 
+2013-04-30 05:13:56,585 INFO [AppConfig] - Company APPLE [APPLE] created 
+2013-04-30 05:13:56,587 INFO [AppConfig] - Company MOTO [MOTO] created 
+2013-04-30 05:13:56,594 INFO [AppConfig] - Company HTC [HTC] created 
+2013-04-30 05:13:56,598 INFO [AppConfig] - Company GOOGLE [GOOGLE] created 
+2013-04-30 05:13:56,603 INFO [AppConfig] - Company MICROSOFT [MICROSOFT] created 
+2013-04-30 05:13:56,614 INFO [AppConfig] - Task APPLE [提供APPLE行情] created 
+2013-04-30 05:13:56,616 INFO [AppConfig] - Task MOTO [提供MOTO行情] created 
+2013-04-30 05:13:56,617 INFO [AppConfig] - Task HTC [提供HTC行情] created 
+2013-04-30 05:13:56,618 INFO [AppConfig] - Task GOOGLE [提供GOOGLE行情] created 
+2013-04-30 05:13:56,620 INFO [AppConfig] - Task MICROSOFT [提供MICROSOFT行情] created 
+2013-04-30 05:13:56,633 INFO [AppServer] - StockInfoServer is successfully startup 
+2013-04-30 05:13:56,705 INFO [AgentServer] - 公共监控管理系统以HTTP的方式启动，端口:1088
+4.1.2 终止
+终止系统有两种方法：
+方法1：进入StockInfoServer/bin目录。在命令行运行shell脚本文件stop.sh。
+$./stop.sh
+方法2：通过访问系统的1088端口（该端口是在4.2.2节提到的monitor-config.xml文件中设定），远程终止系统。
+在浏览器的地址栏输入http://ip:1088（实际操作时，“ip”要换成服务器的ip地址）。
+如：
+ 
+图 5.1 进入系统点击图中的“name=Controller”，进入以下界面：
+ 
+图 5.2 进入控制台页面然后，点击上图下方的 shutdown 按钮，即可。
+4.2 更新程序
+1.	参考第4.1.2节停止程序。
+2.	程序停止后，备份目录，如：
+cp –R StockInfoServer StockInfoServer_bak
+3.	获取新的程序包，解压到现网旧的应用目录下，如StockInfoServer目录，执行如下命令：
+tar –xvf StockInfoServer.tar
+4.	如果发布包的配置文件有更新，则参考3.3节，修改配置文件；如果发布包中的配置文件没有更新，则直接从备份目录中，取出3.3节中的三个配置文件，替换StockInfoServer/config目录下的配置文件。
+5.	参考4.1.1节启动应用。
+6.	检查日志文件，是否有错误日志，以此来确认程序启动成功与否。
+4.3 常见日志说明
+日志级别	发生时间	描述	显示错误信息
+ERROR	启动中	端口被占用	the listenPort[9999] already in use! 
+
+
+ERROR	启动中	配置文件有错误	init stockInfoServer.xml error:…. 错误信息
+ERROR	启动中	启动失败	init() failure…错误信息
+INFO	启动中	表示已经正常启动完毕	StockInfoServer is successfully startup
+ERROR	停止中	停止错误	错误信息
+INFO	停止	停止成功	NetManagement is successfully shutdown
+
+
+
+
+第5章 附录
+5.1 附录B：快速安装指南
+安装步骤请参照3.1小节。
