@@ -1,2 +1,9 @@
-1、安装StockWebServer服务器
-2、安装StockInfoServer服务器
+1、安装StockWebServer服务器,  参考《StockInfoServer1.0.0安装手册.doc》的第三章软件安装；
+
+2、安装StockInfoServer服务器,  参考《StockWebServer1.0.0安装手册.doc》的第三章软件安装；
+
+3、启动StockInfoServer服务器,参考《StockInfoServer1.0.0安装手册.doc》的第四章4.1节运行及终止程序；
+
+4、启动StockWebServer服务器,参考《StockWebServer1.0.0安装手册.doc》的第四章4.1 节运行及终止程序；
+
+5、启动完成！去Chrome浏览器看看,默认地址是http://localhost:8888

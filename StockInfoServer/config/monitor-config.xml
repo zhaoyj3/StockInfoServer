@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config enable="true" >
+	    <!-- 
+	
+	       默认只能通过Web浏览器(连接指定的HTTP端口)、或Console来进行管理。
+	
+	         若采用JMX客户端工具，请参考使用手册
+	
+	    -->
+
+    	<http port="1088" />
+    	
+</config>
