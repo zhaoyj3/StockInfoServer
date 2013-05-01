@@ -298,24 +298,7 @@ log4j.appender.logfile.File	日志文件路径，必须按日志存放路径修�
 配置名称	意义
 port	建议采用默认值,1088，若启动过程中出现“com.asiainfo.dm.common.monitor.MonitorException: 监控管理框架:启动公共监控管理程序出错，该端口已被占用!”，请修改端口。
 3.4 需要定时运行或马上运行的程序
-把StockInfoServer.tar解压后，进入StockInfoServer/bin目录。在命令行运行shell脚本文件run.sh。
-$./run.sh
-然后打开日志文件，看系统是否成功启动
-$tail -f log/stockInfoServer.log
-当出现类似如下代码，系统启动成功：
-2013-04-30 05:13:55,416 DEBUG [AgentServer] - Manageable实例的类名为:com.guangfa.stockinfoserver.AppServer 
-2013-04-30 05:13:56,585 INFO [AppConfig] - Company APPLE [APPLE] created 
-2013-04-30 05:13:56,587 INFO [AppConfig] - Company MOTO [MOTO] created 
-2013-04-30 05:13:56,594 INFO [AppConfig] - Company HTC [HTC] created 
-2013-04-30 05:13:56,598 INFO [AppConfig] - Company GOOGLE [GOOGLE] created 
-2013-04-30 05:13:56,603 INFO [AppConfig] - Company MICROSOFT [MICROSOFT] created 
-2013-04-30 05:13:56,614 INFO [AppConfig] - Task APPLE [提供APPLE行情] created 
-2013-04-30 05:13:56,616 INFO [AppConfig] - Task MOTO [提供MOTO行情] created 
-2013-04-30 05:13:56,617 INFO [AppConfig] - Task HTC [提供HTC行情] created 
-2013-04-30 05:13:56,618 INFO [AppConfig] - Task GOOGLE [提供GOOGLE行情] created 
-2013-04-30 05:13:56,620 INFO [AppConfig] - Task MICROSOFT [提供MICROSOFT行情] created 
-2013-04-30 05:13:56,633 INFO [AppServer] - StockInfoServer is successfully startup 
-2013-04-30 05:13:56,705 INFO [AgentServer] - 公共监控管理系统以HTTP的方式启动，端口:1088
+无
 
 
 

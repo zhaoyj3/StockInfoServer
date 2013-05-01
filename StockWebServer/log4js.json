@@ -1,0 +1,19 @@
+{
+  "appenders": [
+    { 
+      "category": "system", 
+      "type": "file",
+      "maxLogSize": 204800,
+      "backups": 3,
+      "pollInterval": 15,
+      "filename": "logs/system.log"
+    },
+    { 
+      "category": "system", 
+      "type": "console"
+    }
+  ],
+  "levels": {
+    "system":  "INFO"
+  }
+}

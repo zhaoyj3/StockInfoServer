@@ -1,15 +1,18 @@
 var net = require("net");
 var channel  = require("./channel");
+var log=require('./logger').getLogger("system");
 
 var conf={};
 function NetClient(){
     this.init=function(callback){
         var connectListener=function(){
-            console.log('now connect server success!');
+            log.info('now connect server success!');
+//            console.log('now connect server success!');
             self.write('request send data now!\r\n');
             self.on('data', function (data) {
                 //java的writeUTF发送过来的数据,多两个字节,是数据的长度
                   channel.publish(data.substring(2));
+                  log.debug('recv data:' + data.substring(2));
 //                console.log('recv data:' + data.substring(2));
 
             });
@@ -27,12 +30,14 @@ function NetClient(){
                 }, 1000);
 
             } else {
-                console.log('error:' + error);
+                log.error('socket connect occur error:',error);
+//                console.log('error:' + error);
             }
 
         });
         this.client.on('close', function () {
-            console.log('Connection closed');
+            log.debug('Connection closed');
+//            console.log('Connection closed');
         });
 
     };
@@ -40,6 +45,7 @@ function NetClient(){
     this.start=function(callback){
         this.init(callback);
         this.client.connect(conf.port,conf.ip, this.connectListener);
+        log.info('client try to connect stockServer['+conf.port+':'+conf.ip+']');
     } ;
 }
 

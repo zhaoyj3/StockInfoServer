@@ -8,6 +8,7 @@ var express = require('express')
   , company = require('./routes/companyList')
   , path = require('path')
   , http = require('http')
+  ,log=require('./lib/stockService/logger').getLogger("system")
  , StockService = require('./lib/stockService');
 
 
@@ -40,8 +41,9 @@ stockService=new StockService();
 if (!module.parent) {
     stockService.runHttpServer(app);
     stockService.runNetClient(netCLientConfig);
-        console.log("Express server listening on port %d in %s mode", app.get('port'),
-            app.settings.env);
+        log.info("Express server listening on port "+app.get('port')+" in "+app.settings.env+" mode");
+//        console.log("Express server listening on port %d in %s mode", app.get('port'),
+//            app.settings.env);
 }
 
 
@@ -50,8 +52,9 @@ exports.startApp=function(httpPort,netClientConfig){
     var config=netClientConfig||{port: 9999,ip: '127.0.0.1'};
     stockService.runHttpServer(app);
     stockService.runNetClient(netCLientConfig);
-    console.log("Express server listening on port %d in %s mode", app.get('port'),
-        app.settings.env);
+    log.info("Express server listening on port "+app.get('port')+" in "+app.settings.env+" mode");
+//    console.log("Express server listening on port %d in %s mode", app.get('port'),
+//        app.settings.env);
 };
 
 

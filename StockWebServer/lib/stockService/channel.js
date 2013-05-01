@@ -1,4 +1,5 @@
 var events = require('events');
+var log=require('./logger').getLogger("system");
 
 var emitter = new events.EventEmitter();
 var eventName="publish";
@@ -10,14 +11,17 @@ function Channel(){
       connectCount++;
       var session_id = socket.id;
       socket.on("message",function(data){
-          console.log("Received: " + data);
+          log.debug("websocket channel received: " + data);
+//          console.log("Received: " + data);
       });
       socket.on("disconnect",function(){
           connectCount--;
-          console.log("client["+session_id+"] disconnect!");
+          log.info("client["+session_id+"] disconnect!");
+//          console.log("client["+session_id+"] disconnect!");
       });
         emitter.on(eventName, function (msg) {
-            console.log('[socket] send message to client:' + msg);
+            log.debug('[socket] send message to client:' + msg);
+//            console.log('[socket] send message to client:' + msg);
             if(connectCount>1){
             socket.broadcast.emit('stock', msg);
             }else{
@@ -32,6 +36,7 @@ exports.publish=function(msg){
     if(isReady){
      emitter.emit(eventName,msg);
     }else{
+        log.debug("listener is not ready!");
      //console.log('listener is not ready!');
     }
   };

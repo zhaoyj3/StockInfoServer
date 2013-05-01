@@ -1,6 +1,6 @@
 #! /bin/sh
 NODE_ENV=production
-DAEMON="node ../cluster.js"
+DAEMON="node cluster.js"
 NAME=StockInfo
 DESC=StockInfo
 PIDFILE="stockInfo_cluster.pid"

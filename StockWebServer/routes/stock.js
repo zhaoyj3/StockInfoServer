@@ -1,4 +1,5 @@
 var netClient  = require("../lib/stockService/netClient");
+var log=require('../lib/stockService/logger').getLogger("system");
 /*
  * GET home page.
  */
@@ -9,7 +10,8 @@ exports.stockList = function(req, res){
     //socket=netClient.getInstance();
     socket.start(function(){
         var buffer = new Buffer(0);
-        console.log('now connect server success!');
+        log.info('now connect server success!');
+//        console.log('now connect server success!');
         socket.client.on('data', function (data) {
 
 //            res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -21,11 +23,13 @@ exports.stockList = function(req, res){
             socket.client.write('quit!\r\n');
             var msg=buffer.toString('utf8',0,(buffer.length-4));
             res.end(msg);
-            console.log('recvice stock data:' +msg);
+            log.debug('recvice stock data:' +msg);
+//            console.log('recvice stock data:' +msg);
         });
         socket.client.write('/stock/'+stockName+'\r\n');
     });
-    console.log("req param is :"+stockName);
+//    console.log("req param is :"+stockName);
+    log.debug("req param is :"+stockName);
 };
 
 /**
