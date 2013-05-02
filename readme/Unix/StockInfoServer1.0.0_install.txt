@@ -100,7 +100,7 @@ ant
 2.2 安装文件
 
 git clone git://github.com/zhaoyj3/StockInfoServer.git；
-到StockInfoServer的目录，用ant来打包，在dist目录获得安装文件StockInfoServer.tar
+到StockInfoServer/StockInfoServer的目录，用ant来打包，在dist目录获得安装文件StockInfoServer.tar
 获得安装文件StockInfoServer.tar，里面包括程序和相应的配置文件及操作脚本三个文件夹。
 
 
@@ -312,6 +312,13 @@ port	建议采用默认值,1088，若启动过程中出现“com.asiainfo.dm.com
 4.1.1 运行
 把StockInfoServer.tar解压后，进入StockInfoServer/bin目录。在命令行运行shell脚本文件run.sh。
 $./run.sh
+
+若打入命令后出现以下代码，说明文件的换行符是windows的换行符，unix不能识别。解决办法是：用editplus等编辑软件把文档换行格式转换成unix的即可。
+bash: ./run.sh: /bin/sh^M: bad interpreter:
+然后替换原来的脚本文件，再执行一遍。
+
+
+
 然后打开日志文件，看系统是否成功启动
 $tail -f log/stockInfoServer.log
 当出现类似如下代码，系统启动成功：
@@ -328,10 +335,22 @@ $tail -f log/stockInfoServer.log
 2013-04-30 05:13:56,620 INFO [AppConfig] - Task MICROSOFT [提供MICROSOFT行情] created 
 2013-04-30 05:13:56,633 INFO [AppServer] - StockInfoServer is successfully startup 
 2013-04-30 05:13:56,705 INFO [AgentServer] - 公共监控管理系统以HTTP的方式启动，端口:1088
+
+
+
+
 4.1.2 终止
+
 终止系统有两种方法：
 方法1：进入StockInfoServer/bin目录。在命令行运行shell脚本文件stop.sh。
 $./stop.sh
+
+若打入命令后出现以下代码，说明文件的换行符是windows的换行符，unix不能识别。解决办法是：用editplus等编辑软件把文档换行格式转换成unix的即可。
+bash: ./stop.sh: /bin/sh^M: bad interpreter:
+然后替换原来的脚本文件，再执行一遍。
+
+
+
 方法2：通过访问系统的1088端口（该端口是在4.2.2节提到的monitor-config.xml文件中设定），远程终止系统。
 在浏览器的地址栏输入http://ip:1088（实际操作时，“ip”要换成服务器的ip地址）。
 如：

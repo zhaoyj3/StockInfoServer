@@ -118,7 +118,7 @@ $ npm -v
 1.	获取应用StockWebServer
 git clone git://github.com/zhaoyj3/StockInfoServer.git；
 2.	到StockWebServer目录下执行如下命令安装依赖的类库；
-node install
+npm install
 3.	修改StockWebServer目录下脚本执行权限
 chmod a+x stockinfo_cluster.sh
 chmod a+x stockinfo_single.sh
@@ -189,27 +189,42 @@ var netCLientConfig = {port: 9999,ip: '127.0.0.1'};
 第4章 系统维护
 4.1 运行及终止程序
 4.1.1 运行
+
 方式一：多线程模式：
 到StockWebServer目录下，命令行运行shell脚本文件stockinfo_cluster.sh。
 $./stockinfo_cluster.sh start
+
 没有报错，出现类似下面代码，表示启动成功。
 Starting StockInfo: 
 7924
 Starting StockInfo finish.
 
-     方式二：执行单线程模式
+若打入命令后出现以下代码，说明文件的换行符是windows的换行符，unix不能识别。解决办法是：用editplus等编辑软件把文档换行格式转换成unix的即可。
+bash: ./stockinfo_cluster.sh: /bin/sh^M: bad interpreter:
+然后替换原来的脚本文件，再执行一遍。
+
+
+方式二：执行单线程模式
 采用stockinfo_single.sh脚本，执行方法跟上面雷同。
-      
+ 
+
+     
 4.1.2 终止
 方式一：多线程模式：
 到StockWebServer目录下，命令行运行shell脚本文件stockinfo_cluster.sh。
 $./stockinfo_cluster.sh stop
+
 没有报错，出现类似下面代码，表示启动成功。
 Starting StockInfo: 
 7924
 Starting StockInfo finish.
 
-     方式二：执行单线程模式
+若打入命令后出现以下代码，说明文件的换行符是windows的换行符，unix不能识别。解决办法是：用editplus等编辑软件把文档换行格式转换成unix的即可。
+bash: ./stockinfo_cluster.sh: /bin/sh^M: bad interpreter:
+然后替换原来的脚本文件，再执行一遍。
+
+
+方式二：执行单线程模式
 采用stockinfo_single.sh脚本，执行方法跟上面雷同。
 
 
