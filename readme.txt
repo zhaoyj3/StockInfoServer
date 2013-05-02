@@ -1,4 +1,4 @@
-
+执行以下命令获得源代码：git clone git://github.com/zhaoyj3/StockInfoServer.git；
 本系统股市模拟系统，分为两个子系统：StockInfoServer股市行情服务器和StockWebServer股市Web服务器，见同名两个目录。
 
 
