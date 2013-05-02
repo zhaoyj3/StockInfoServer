@@ -508,8 +508,9 @@ PortfolioItem.prototype.getColor = function () {
 PortfolioItem.prototype.pricesChanged = function () {
     var prices = this.company.prices();
     if (prices.length > 1) {
-        this.lastPrice(prices[0].price);
-        this.change(prices[0].price - prices[1].price);
+        var len=prices.length;
+        this.lastPrice(prices[len-1].price);
+        this.change(prices[len-1].price - prices[len-2].price);
         if (this.chart()) {
             this.updateChartData();
         }

@@ -45,7 +45,7 @@ function NetClient(){
     this.start=function(callback){
         this.init(callback);
         this.client.connect(conf.port,conf.ip, this.connectListener);
-        log.info('client try to connect stockServer['+conf.port+':'+conf.ip+']');
+        log.info('client try to connect stockServer['+conf.ip+':'+conf.port+']');
     } ;
 }
 

@@ -6,6 +6,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import net.sf.json.util.CycleDetectionStrategy;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.net.Socket;
@@ -21,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * To change this template use File | Settings | File Templates.
  */
 public class Servicer implements Runnable {
+    private final Logger logger = Logger.getLogger(AppServer.class);
     private Socket s;
     private int eventCode = 0;
     private String strWord;
@@ -132,7 +134,7 @@ public class Servicer implements Runnable {
             s.close();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("socketServer write data to client occur error:",e);
         }
     }
 }

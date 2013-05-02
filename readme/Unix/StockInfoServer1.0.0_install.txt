@@ -99,6 +99,9 @@ ant
 3)	看到BUILD SUCCESSFUL打包成功的文字描述后，到工程目录下的dist目录获得安装文件StockInfoServer.tar。
      
 2.2 安装文件
+
+git clone git://github.com/zhaoyj3/StockInfoServer.git；
+到StockInfoServer的目录，用ant来打包，在dist目录获得安装文件StockInfoServer.tar
 获得安装文件StockInfoServer.tar，里面包括程序和相应的配置文件及操作脚本三个文件夹。
 
 
