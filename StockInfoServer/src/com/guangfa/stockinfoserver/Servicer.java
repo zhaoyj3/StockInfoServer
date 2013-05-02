@@ -75,7 +75,7 @@ public class Servicer implements Runnable {
                     String array[] = strWord.split("\\/");
                     List<Stock> stockList = AllTaskResult.getInstance().getHistoryStockList(array[2]);
                     if (stockList != null && stockList.size() > 0) {
-                        System.out.println(array[2] + " current size=" + stockList.size());
+                        logger.info(array[2] + " current size=" + stockList.size());
                         String json = JSONArray.fromObject(stockList, config).toString();
                         writer.write(json.getBytes("utf-8"));
                         writer.write("\r\n\r\n".getBytes("utf-8"));
@@ -96,7 +96,7 @@ public class Servicer implements Runnable {
                     eventCode = 3;
                     Collection<Company> companyList = AllTaskResult.getInstance().getCompanyList();
                     if (companyList != null && companyList.size() > 0) {
-                        System.out.println("companyList current size=" + companyList.size());
+                        logger.info("companyList current size=" + companyList.size());
                         String json = JSONArray.fromObject(companyList).toString();
                         writer.write(json.getBytes("utf-8"));
                         writer.write("\r\n\r\n".getBytes("utf-8"));
