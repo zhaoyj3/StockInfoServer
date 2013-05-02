@@ -51,7 +51,7 @@ exports.startApp=function(httpPort,netClientConfig){
     app.set('port', httpPort||8888);
     var config=netClientConfig||{port: 9999,ip: '127.0.0.1'};
     stockService.runHttpServer(app);
-    stockService.runNetClient(netCLientConfig);
+    stockService.runNetClient(config);
     log.info("Express server listening on port "+app.get('port')+" in "+app.settings.env+" mode");
 //    console.log("Express server listening on port %d in %s mode", app.get('port'),
 //        app.settings.env);
